@@ -16,12 +16,12 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-strapi',
+      resolve: "gatsby-source-strapi",
       options: {
-        apiURL: 'http://localhost:1337',
-        contentTypes: [
-          'article',
-          'writer'
+        apiURL: "http://localhost:1337",
+        collectionTypes: [
+          "Article",
+          "Writer",
         ],
         queryLimit: 1000,
       }

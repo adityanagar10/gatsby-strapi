@@ -1,29 +1,45 @@
 import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
-
+import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Img from 'gatsby-plugin-image'
 
-const IndexPage = () => (
+
+const IndexPage = ({data}) => (
   <Layout>
-    <Seo title="Home" />
+    
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
-    <StaticImage
-      src="../images/gatsby-astronaut.png"
-      width={300}
-      quality={95}
-      formats={["AUTO", "WEBP", "AVIF"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
+    <ul>
+      {data.allStrapiArticle.edges.map(document => (
+        <li key = {document.node.id}>
+          <h2>
+            <Link to = {`/${document.node.id}`}>
+              {document.node.title}
+            </Link>
+          </h2>
+        </li>
+      ))}
+    </ul>
     <p>
       <Link to="/page-2/">Go to page 2</Link> <br />
-      <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
     </p>
   </Layout>
 )
 
 export default IndexPage
+
+
+export const pageQuery = graphql`
+query IndexQuery {
+  allStrapiArticle{
+    edges{
+      node{
+        id
+        title
+        content
+      }
+    }
+  }
+}
+`
